@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('teacher'); // Ensure only teachers can access these routes
+    }
+
     public function index()
     {
         $classRequests = ClassRequest::where('teacher_id', auth()->id())->get();
@@ -21,7 +27,7 @@ class TeacherController extends Controller
         // send notification to students
 
         return redirect()->route('teacher.index')
-                        ->with('success', 'Class request accepted.');
+            ->with('success', 'Class request accepted.');
     }
 
     public function reject(ClassRequest $classRequest)
@@ -32,7 +38,6 @@ class TeacherController extends Controller
         // send notification to students
 
         return redirect()->route('teacher.index')
-                        ->with('success', 'Class request rejected.');
+            ->with('success', 'Class request rejected.');
     }
 }
-

@@ -2,45 +2,64 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ClassRequest;
-use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        $classRequests = ClassRequest::all();
-        return view('admin.index', compact('classRequests'));
+        // Return the admin dashboard view
+        return view('admin.index');
     }
 
-    public function show(ClassRequest $classRequest)
+    // public function show($id)
+    // {
+    //     // Show class request details
+    //     $classRequest = ClassRequest::findOrFail($id);
+    //     return view('admin.show', compact('classRequest'));
+    // }
+
+    // public function assignTeacher(Request $request, $id)
+    // {
+    //     // Logic to assign teacher to a class request
+    // }
+
+    // public function reject($id)
+    // {
+    //     // Logic to reject a class request
+    // }
+
+    public function createTeacherForm()
     {
-        $teachers = Teacher::all();
-        return view('admin.show', compact('classRequest', 'teachers'));
+        // Return the view to create a teacher
+        return view('admin.create-teacher');
     }
 
-    public function assignTeacher(Request $request, ClassRequest $classRequest)
+    public function createTeacher(Request $request)
     {
-        $classRequest->teacher_id = $request->teacher_id;
-        $classRequest->status = 'approved';
-        $classRequest->save();
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|confirmed|min:8',
+        ]);
 
-        // send notification to teacher
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
-        return redirect()->route('admin.index')
-                        ->with('success', 'Teacher assigned successfully.');
-    }
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'is_teacher' => true,
+        ]);
+        $user->is_teacher = true;
 
-    public function reject(ClassRequest $classRequest)
-    {
-        $classRequest->status = 'rejected';
-        $classRequest->save();
-
-        // send notification to student
-
-        return redirect()->route('admin.index')
-                        ->with('success', 'Class request rejected.');
+        return redirect()->route('dashboard')->with('status', 'Teacher created successfully!');
     }
 }
-

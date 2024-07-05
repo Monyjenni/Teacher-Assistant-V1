@@ -45,7 +45,9 @@ class RegisteredUserController extends Controller
 
     $user->save();
 
-    return redirect()->route('dashboard'); // Redirect to appropriate page after registration
+    if ($user->is_admin) {
+        return redirect()->route('dashboard');
+    }
 }
 
 }

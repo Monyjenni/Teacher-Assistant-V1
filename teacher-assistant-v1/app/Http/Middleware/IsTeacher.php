@@ -1,5 +1,7 @@
 <?php
 
+// app\Http\Middleware\IsTeacher.php
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -13,7 +15,8 @@ class IsTeacher
             return $next($request);
         }
 
-        return redirect('home')->with('error', 'You have not teacher access');
+        return redirect('home')->with('error', 'You do not have teacher access.');
     }
 }
+
 
