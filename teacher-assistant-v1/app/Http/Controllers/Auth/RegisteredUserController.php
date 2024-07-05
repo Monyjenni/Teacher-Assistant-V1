@@ -15,7 +15,7 @@ use Illuminate\View\View;
 class RegisteredUserController extends Controller
 {
     /**
-     * Display the registration view.da
+     * Display the registration view.da a
      */
     public function create(): View
     {
