@@ -22,6 +22,12 @@ Route::middleware('guest')->group(function () {
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
+    Route::get('teacher/login', [AuthenticatedSessionController::class, 'loginTeacher'])
+                ->name('teacher.login'); // Route for teacher login
+
+    Route::post('teacher/login', [AuthenticatedSessionController::class, 'storeTeacher'])
+                ->name('teacher.login.submit'); // Route for handling teacher login form submission
+
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');
 
@@ -34,6 +40,7 @@ Route::middleware('guest')->group(function () {
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.store');
 });
+
 
 Route::middleware('auth')->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)

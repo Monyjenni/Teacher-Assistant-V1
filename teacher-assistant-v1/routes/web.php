@@ -5,6 +5,7 @@ use App\Http\Controllers\ClassRequestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TeacherDashboardController;
 
 
 Route::get('/', function () {
@@ -31,9 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/create-teacher', [AdminController::class, 'createTeacher'])->name('admin.createTeacher');
 
 
-    Route::get('/teacher', [TeacherController::class, 'index'])->name('teacher.index');
-    Route::post('/teacher/classRequests/{classRequest}/accept', [TeacherController::class, 'accept'])->name('teacher.accept');
-    Route::post('/teacher/classRequests/{classRequest}/reject', [TeacherController::class, 'reject'])->name('teacher.reject');
+    Route::get('/teacher/dashboard', [TeacherDashboardController::class, 'index'])->name('teacher.dashboard');
+
+
 
 
 Route::resource('classRequests', ClassRequestController::class);
