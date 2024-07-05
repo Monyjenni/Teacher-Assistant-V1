@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\StudentAuthController;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -41,6 +42,8 @@ Route::middleware('guest')->group(function () {
                 ->name('password.store');
 });
 
+Route::get('student/register', [StudentAuthController::class, 'showRegisterForm'])->name('student.register');
+    Route::post('student/register', [StudentAuthController::class, 'register'])->name('student.register.submit');
 
 Route::middleware('auth')->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)

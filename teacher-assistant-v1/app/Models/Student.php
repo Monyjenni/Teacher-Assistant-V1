@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name', 'email', 'password', // Add other fields as needed
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 }
