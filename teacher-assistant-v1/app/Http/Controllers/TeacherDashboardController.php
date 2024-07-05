@@ -10,7 +10,7 @@ class TeacherDashboardController extends Controller
     {
         // Example logic to fetch data or perform operations
 
-        return view('teacher.dashboard'); // Assuming 'teacher.dashboard' is your blade view
+        return view('teacher.teacherDashboard'); // Assuming 'teacher.dashboard' is your blade view
     }
 }
 

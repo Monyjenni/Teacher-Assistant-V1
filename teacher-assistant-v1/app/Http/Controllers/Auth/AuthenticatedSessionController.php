@@ -49,7 +49,27 @@ class AuthenticatedSessionController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('teacher.dashboard', absolute: false));
+            return redirect()->intended(route('teacher.teacherDashboard', absolute: false));
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->withInput();
+    }
+
+    public function loginStudent(): View
+    {
+        return view('auth.student-login');
+    }
+
+    public function storeStudent(LoginRequest $request): RedirectResponse
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended(route('student.studentDashboard', absolute: false));
         }
 
         return back()->withErrors([

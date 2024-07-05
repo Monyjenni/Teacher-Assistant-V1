@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClassRequestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\StudentDashboardController;
 use App\Http\Controllers\TeacherDashboardController;
 
 
@@ -30,9 +30,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/classRequests/{classRequest}/reject', [AdminController::class, 'reject'])->name('admin.reject');
     Route::get('/admin/create-teacher', [AdminController::class, 'createTeacherForm'])->name('admin.createTeacherForm');
     Route::post('/admin/create-teacher', [AdminController::class, 'createTeacher'])->name('admin.createTeacher');
+    Route::post('/admin/create-admin', [AdminController::class, 'createAdmin'])->name('admin.createAdmin');
 
+    Route::post('/admin/create-student', [AdminController::class, 'createStudent'])->name('admin.createStudent');
+    Route::get('/admin/create-student', [AdminController::class, 'createStudentForm'])->name('admin.createStudentForm');
 
-    Route::get('/teacher/dashboard', [TeacherDashboardController::class, 'index'])->name('teacher.dashboard');
+    Route::get('/teacher/teacherDashboard', [TeacherDashboardController::class, 'index'])->name('teacher.teacherDashboard');
+    Route::get('/student/studentDashboard', [StudentDashboardController::class, 'index'])->name('student.studentDashboard');
 
 
 

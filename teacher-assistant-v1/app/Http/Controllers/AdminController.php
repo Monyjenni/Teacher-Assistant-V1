@@ -60,6 +60,37 @@ class AdminController extends Controller
         ]);
         $user->is_teacher = true;
 
-        return redirect()->route('dashboard')->with('status', 'Teacher created successfully!');
+        return redirect()->route('teacherDashboard')->with('status', 'Teacher created successfully!');
+    }
+
+
+    public function createStudentForm()
+    {
+        return view('admin.create-student');
+    }
+
+    public function createStudent(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|confirmed|min:8',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'is_student' => true,
+        ]);
+        $user->is_student = true;
+
+        return redirect()->route('studentDashboard')->with('status', 'Teacher created successfully!');
     }
 }

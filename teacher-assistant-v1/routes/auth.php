@@ -27,7 +27,13 @@ Route::middleware('guest')->group(function () {
                 ->name('teacher.login'); // Route for teacher login
 
     Route::post('teacher/login', [AuthenticatedSessionController::class, 'storeTeacher'])
-                ->name('teacher.login.submit'); // Route for handling teacher login form submission
+                ->name('teacher.login.submit');
+
+    Route::get('student/login', [AuthenticatedSessionController::class, 'loginStudent'])
+    ->name('student.login'); // Route for teacher login
+
+    Route::post('student/login', [AuthenticatedSessionController::class, 'storeStudent'])
+    ->name('student.login.submit');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');
