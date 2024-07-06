@@ -14,10 +14,12 @@ class TestMail extends Mailable
     use Queueable, SerializesModels;
 
     private $data;
+    private $class;
 
-    public function __construct($data)
+    public function __construct($data, $class)
     {
         $this->data = $data;
+        $this->class = $class;
     }
 
     public function envelope(): Envelope
@@ -33,7 +35,8 @@ class TestMail extends Mailable
             view: 'email.simple-email',
             with: [
                 "name" => $this->data["name"],
-                "from" => $this->data["from"]
+                "from" => $this->data["from"],
+                "class" => $this->class,
             ]
         );
     }

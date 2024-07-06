@@ -10,7 +10,7 @@ use App\Http\Controllers\Student\ClassCourseController;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
 use App\Models\ClassCourse;
-
+use App\Mail\ClassRequestMail;
 
 Route::get('/', function () {
     return view('welcome');
@@ -54,12 +54,17 @@ Route::prefix('student')->group(function () {
     Route::delete('classes/{class}', [ClassCourseController::class, 'destroy'])->name('student.classes.destroy');
 });
 
-Route::get("/email-1", function(){
+Route::get("/email-1", function() {
     $name = "Admin";
     $from = "Teacher Assistant";
+    $class = ClassCourse::latest()->first(); // Get the latest created class
+
+    if (!$class) {
+        return redirect()->route('student.classes.index')->with('error', 'No classes found.');
+    }
 
     // Send email
-    Mail::to("chansovanmonyyoeun03@gmail.com")->send(new TestMail(compact("name", "from")));
+    Mail::to("chansovanmonyyoeun03@gmail.com")->send(new TestMail(compact("name", "from"), $class));
 
     // Redirect to the index route of classes
     return redirect()->route('student.classes.index')->with('success', 'Email sent successfully!');

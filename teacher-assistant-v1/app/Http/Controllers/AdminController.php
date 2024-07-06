@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\ClassRequest;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -15,22 +18,6 @@ class AdminController extends Controller
         return view('admin.index');
     }
 
-    // public function show($id)
-    // {
-    //     // Show class request details
-    //     $classRequest = ClassRequest::findOrFail($id);
-    //     return view('admin.show', compact('classRequest'));
-    // }
-
-    // public function assignTeacher(Request $request, $id)
-    // {
-    //     // Logic to assign teacher to a class request
-    // }
-
-    // public function reject($id)
-    // {
-    //     // Logic to reject a class request
-    // }
 
     public function createTeacherForm()
     {
@@ -92,5 +79,32 @@ class AdminController extends Controller
         $user->is_student = true;
 
         return redirect()->route('dashboard')->with('status', 'Student created successfully!');
+    }
+
+    public function show(ClassRequest $classRequest)
+    {
+        $studentName = $classRequest->student->name;
+        $teacherName = $classRequest->teacher ? $classRequest->teacher->name : 'Not assigned';
+
+        return view('admin.show', [
+            'classRequest' => $classRequest,
+            'studentName' => $studentName,
+            'teacherName' => $teacherName,
+        ]);
+    }
+
+    public function assignTeacher(Request $request, ClassRequest $classRequest)
+    {
+        $request->validate([
+            'teacher_id' => 'required|exists:users,id',
+        ]);
+
+
+        $classRequest->update([
+            'teacher_id' => $request->teacher_id,
+            'status' => 'approved',
+        ]);
+
+        return redirect()->back()->with('success', 'Teacher assigned successfully!');
     }
 }
