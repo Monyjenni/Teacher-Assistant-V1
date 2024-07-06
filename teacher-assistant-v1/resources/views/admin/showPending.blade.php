@@ -35,6 +35,8 @@
                             Assign Teacher
                         </button>
                     </form>
+                @else
+                    <p><strong>Assigned Teacher:</strong> {{ $teacherName }}</p>
                 @endif
 
                 <div class="mt-4">

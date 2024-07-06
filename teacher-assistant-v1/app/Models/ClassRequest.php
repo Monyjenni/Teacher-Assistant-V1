@@ -14,6 +14,7 @@ class ClassRequest extends Model
         'description',
         'student_id',
         'teacher_id',
+        'class_id',
         'status',
     ];
 
