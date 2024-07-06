@@ -1,42 +1,41 @@
-<!-- resources/views/auth/teacher-login.blade.php -->
 
 <x-guest-layout>
-        <x-slot name="logo">
-            <a href="/">
-                {{ __('Logo') }}
-            </a>
-        </x-slot>
+    <x-slot name="logo">
+        <a href="/">
+            <span class="text-2xl font-bold text-gray-800">{{ __('Logo') }}</span>
+        </a>
+    </x-slot>
 
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">
-            {{ __('Student Login') }}
-        </h2>
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
+            <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">{{ __('Student Login') }}</h2>
 
-        <form method="POST" action="{{ route('student.login') }}">
-            @csrf
+            <form method="POST" action="{{ route('student.login') }}">
+                @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                <!-- Email Address -->
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-700">{{ __('Email') }}</label>
+                    <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                    @error('email')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Password -->
+                <div class="mb-4">
+                    <label for="password" class="block text-sm font-medium text-gray-700">{{ __('Password') }}</label>
+                    <input id="password" type="password" name="password" required autocomplete="current-password" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                    @error('password')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Login Button -->
+                <div>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">{{ __('Log in') }}</button>
+                </div>
+            </form>
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-
-        </form>
+    </div>
 </x-guest-layout>
-

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Student Dashboard') }}
         </h2>
     </x-slot>
 
@@ -19,6 +19,7 @@
                             <tr class="bg-gray-100">
                                 <th class="border px-4 py-2">Name</th>
                                 <th class="border px-4 py-2">Description</th>
+                                <th class="border px-4 py-2">Status</th>
                                 <th class="border px-4 py-2">Actions</th>
                             </tr>
                         </thead>
@@ -27,10 +28,11 @@
                                 <tr class="hover:bg-gray-50">
                                     <td class="border px-4 py-2">{{ $class->name }}</td>
                                     <td class="border px-4 py-2">{{ $class->description }}</td>
-                                    <td class="border px-4 py-2 flex space-x-2">
+                                    <td class="border px-4 py-2">{{ $class->status }}</td>
+                                    <td class="border px-4 py-2 flex space-x-4"> <!-- Adjust space-x-4 for desired spacing -->
                                         <a href="{{ route('student.classes.show', $class->id) }}" class="text-blue-500 hover:text-blue-700">View</a>
-                                        <a href="{{ route('student.classes.edit', $class->id) }}" class="text-green-500 hover:text-green-700">Edit</a>
-                                        <form action="{{ route('student.classes.destroy', $class->id) }}" method="POST" class="inline">
+                                        <a href="{{ route('student.classes.edit', $class->id) }}" class="text-green-500 hover:text-green-700 ml-4">Edit</a> <!-- Added ml-4 for margin-left -->
+                                        <form action="{{ route('student.classes.destroy', $class->id) }}" method="POST" class="inline ml-4"> <!-- Added ml-4 for margin-left -->
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>

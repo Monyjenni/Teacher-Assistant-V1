@@ -9,6 +9,8 @@ use App\Http\Controllers\TeacherDashboardController;
 use App\Http\Controllers\Student\ClassCourseController;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
+use App\Models\ClassCourse;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -53,15 +55,15 @@ Route::prefix('student')->group(function () {
 });
 
 Route::get("/email-1", function(){
-    $name = "Sanjay";
-    $from = "Online Web Tutor";
+    $name = "Admin";
+    $from = "Teacher Assistant";
 
+    // Send email
     Mail::to("chansovanmonyyoeun03@gmail.com")->send(new TestMail(compact("name", "from")));
 
-    dd("Email Send Successfully");
+    // Redirect to the index route of classes
+    return redirect()->route('student.classes.index')->with('success', 'Email sent successfully!');
 });
-
-
 
 
 Route::resource('classRequests', ClassRequestController::class);
