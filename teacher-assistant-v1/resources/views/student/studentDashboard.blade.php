@@ -22,7 +22,7 @@
                     {{ __("You're logged in!") }}
 
                     <a href="{{ route('student.classes.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block">
-                        Create Student
+                        Create Class
                     </a>
                 </div>
             </div>

@@ -7,7 +7,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentDashboardController;
 use App\Http\Controllers\TeacherDashboardController;
 use App\Http\Controllers\Student\ClassCourseController;
-
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('welcome');
@@ -49,6 +50,15 @@ Route::prefix('student')->group(function () {
     Route::get('classes/{class}/edit', [ClassCourseController::class, 'edit'])->name('student.classes.edit');
     Route::put('classes/{class}', [ClassCourseController::class, 'update'])->name('student.classes.update');
     Route::delete('classes/{class}', [ClassCourseController::class, 'destroy'])->name('student.classes.destroy');
+});
+
+Route::get("/email-1", function(){
+    $name = "Sanjay";
+    $from = "Online Web Tutor";
+
+    Mail::to("chansovanmonyyoeun03@gmail.com")->send(new TestMail(compact("name", "from")));
+
+    dd("Email Send Successfully");
 });
 
 

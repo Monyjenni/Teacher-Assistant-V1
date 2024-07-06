@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ClassCourse;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestMail;
 
 class ClassCourseController extends Controller
 {
@@ -33,7 +35,8 @@ class ClassCourseController extends Controller
             'student_id' => auth()->id(),
         ]);
 
-        return redirect()->route('student.classes.index')->with('success', 'Class created successfully.');
+
+        return redirect('/email-1')->with('success', 'Class created successfully.');
     }
 
     public function show(ClassCourse $class)
