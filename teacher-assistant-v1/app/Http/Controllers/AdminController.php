@@ -91,6 +91,6 @@ class AdminController extends Controller
         ]);
         $user->is_student = true;
 
-        return redirect()->route('studentDashboard')->with('status', 'Teacher created successfully!');
+        return redirect()->route('dashboard')->with('status', 'Student created successfully!');
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentDashboardController;
 use App\Http\Controllers\TeacherDashboardController;
+use App\Http\Controllers\Student\ClassCourseController;
 
 
 Route::get('/', function () {
@@ -37,6 +38,18 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/teacher/teacherDashboard', [TeacherDashboardController::class, 'index'])->name('teacher.teacherDashboard');
     Route::get('/student/studentDashboard', [StudentDashboardController::class, 'index'])->name('student.studentDashboard');
+
+
+
+Route::prefix('student')->group(function () {
+    Route::get('classes', [ClassCourseController::class, 'index'])->name('student.classes.index');
+    Route::get('classes/create', [ClassCourseController::class, 'create'])->name('student.classes.create');
+    Route::post('classes', [ClassCourseController::class, 'store'])->name('student.classes.store');
+    Route::get('classes/{class}', [ClassCourseController::class, 'show'])->name('student.classes.show');
+    Route::get('classes/{class}/edit', [ClassCourseController::class, 'edit'])->name('student.classes.edit');
+    Route::put('classes/{class}', [ClassCourseController::class, 'update'])->name('student.classes.update');
+    Route::delete('classes/{class}', [ClassCourseController::class, 'destroy'])->name('student.classes.destroy');
+});
 
 
 
